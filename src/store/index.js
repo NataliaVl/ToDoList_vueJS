@@ -8,8 +8,8 @@ export default class TodoList{
         return this.todos.filter(note => !note.isDone).length;
     } 
     @action
-    addTodo(title){
-        this.todos.push(new Todo(title));
+    addTodo(title, description, date, subtasks){
+        this.todos.push(new Todo(title, description, date, subtasks));
     }
     @action
     removeTodo(id){
