@@ -31,6 +31,10 @@
                   for="title"
                 >Подзадачи</label>
               </div>
+              <div v-for="(sub,i) in todo.subtasks" :key="i">
+                {{sub.title}}                 
+              </div>
+              
             </div>
           </div>
         </div>

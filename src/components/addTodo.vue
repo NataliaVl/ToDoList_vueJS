@@ -36,6 +36,7 @@
             id="description"
             type="text"
             placeholder="Description"
+        
           />
           <!-- <p class="text-grey-dark text-xs italic">Make it as long and as crazy as you'd like</p> -->
         </div>
@@ -45,17 +46,21 @@
         <label
           class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"          
         >Подзадачи</label>
-        <div class="flex items-start">
-          <button @click="hideInput()" class="bg-white hover:bg-gray-100 block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 font-semibold py-2 px-4 mr-2 border border-gray-400 rounded shadow">
-            Add
-          </button>
-          <input v-if="inputVisibility"
+        <div class="flex flex-col items-start">
+          
+          <input v-for="(sub, i) in subtasks" :key="i"
             class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
             id="subt"
             type="text"
             placeholder="Подзадача"
+            v-model="subtasks[i].title"
           />
+          
+          
         </div>
+        <button @click="addSubTaskClick()" class="bg-white hover:bg-gray-100 block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 font-semibold py-2 px-4 mr-2 border border-gray-400 rounded shadow">
+            Add
+          </button>
       </div>
       <!-- <div class="-mx-3 md:flex mb-2">
     
@@ -118,39 +123,30 @@ export default observer({
         value: new Date(),
         formattedValue: "",
       },
-      inputVisibility: false,
-      //subtasks: [],  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  
+      subtasks: [],  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       vm: store, //хранилище как свойство vm      
-      // subtasks: {    ///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      //   title: ""
-      // }
     };
   },
   methods: {
+
+
     addNewTodo() {
-      //addSubtasck();
-      let s = document.getElementById('subt').value;
-      let subtasks = [];
-      subtasks.push(s);
-      console.log('s: ', s);
-      console.log(subtasks);
-
-
+      
+     
 
 
       if (this.title !== "") {
-        // this.vm.addTodo(this.title, this.description, this.date.formattedValue, this.subtasks); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
-        this.vm.addTodo(this.title, this.description, this.date.formattedValue);
+        this.vm.addTodo(this.title, this.description, this.date.formattedValue, this.subtasks);
         this.title = "";
         this.description = "";
-        this.date.value = "";
-        this.date.formattedValue = "";
+        this.subtasks = [];
       }
     },
     
-    
-    hideInput() {
-      this.inputVisibility ? this.inputVisibility = false : this.inputVisibility = true;
+    addSubTaskClick() {
+     this.subtasks.push({title: ""});
+     console.log('subtasks: ', this.subtasks);
     },
     
   },
