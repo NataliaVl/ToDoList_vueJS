@@ -9,7 +9,7 @@
           >Название</label>
           <input
             v-model="title"
-            placeholder="New Task"
+            placeholder="Task"
             class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
             id="title"
             type="text"
@@ -21,7 +21,12 @@
             class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
             for="completion-date"
           >Дата выполнения задачи</label>
-          <vueye-datepicker v-model="date" placeholder="Date" color="#4466ee" format="dd-mm-yyyy" />
+          <div class="flex justify-between">
+          <vueye-datepicker v-if="visibleDate" v-model="date" placeholder="Date" color="#4466ee" format="dd-mm-yyyy" class="py-3 px-4"/>          
+            <button @click="removeDateClick()" class="bg-white hover:bg-gray-100 block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 font-semibold py-2 px-4 mr-2 border border-gray-400 rounded shadow">
+            {{nameOfDateButton}}
+          </button>
+          </div>
         </div>
       </div>
       <div class="-mx-3 md:flex mb-6">
@@ -46,56 +51,36 @@
         <label
           class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"          
         >Подзадачи</label>
-        <div class="flex flex-col items-start">
-          
-          <input v-for="(sub, i) in subtasks" :key="i"
-            class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+        <div class="flex flex-col items-start ">
+          <div class="flex" v-for="(sub, i) in subtasks" :key="i">
+            <input 
+            class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 my-1"
             id="subt"
             type="text"
-            placeholder="Подзадача"
+            placeholder="Subtask"
             v-model="subtasks[i].title"
           />
+          <button @click="delSubTaskClick(i)" class="bg-white hover:bg-gray-100 block uppercase tracking-wide text-grey-darker text-xs font-bold my-1 font-semibold py-2 px-4 mx-1 border border-gray-400 rounded shadow">
+            Del
+          </button>
+          </div>
           
           
         </div>
-        <button @click="addSubTaskClick()" class="bg-white hover:bg-gray-100 block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 font-semibold py-2 px-4 mr-2 border border-gray-400 rounded shadow">
-            Add
+        <button @click="addSubTaskClick()" class="bg-white hover:bg-gray-100 block uppercase tracking-wide text-grey-darker text-xs font-bold my-2 font-semibold py-2 px-4 mr-2 border border-gray-400 rounded shadow">
+            Add Subtask
           </button>
       </div>
-      <!-- <div class="-mx-3 md:flex mb-2">
-    
-    <div class="md:w-1/2 px-3">
-      <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-state">
-        State
-      </label>
-      <div class="relative">
-        <select class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded" id="grid-state">
-          <option>New Mexico</option>
-          <option>Missouri</option>
-          <option>Texas</option>
-        </select>
-        <div class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">
-          <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-        </div>
-      </div>
+      <div class="flex justify-center md:w-full px-3">
+        <button @click="onCreateBtnClick()" class="bg-gray-600 hover:bg-gray-700 block uppercase tracking-wide text-white text-base mb-2 font-semibold py-2 px-4 mr-2 border border-gray-400 rounded shadow" :disabled="title===''">
+            Add Task
+          </button>
+      </div>     
     </div>
-    <div class="md:w-1/2 px-3">
-      <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-zip">
-        Zip
-      </label>
-      <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" id="grid-zip" type="text" placeholder="90210">
-    </div>
-      </div>-->
-    </div>
-
-    <div class="adding">
-      <input type="text" />
-      <br />
-      <button id="btnAdd" @click="addNewTodo()" :disabled="title===''">Add</button><!-- КАК НАВЕСИТЬ 2 СОБЫТИЯ НА КНОПКУ????   -->
-    </div>
-    <div v-if="vm.undones>0">Task not finished {{ vm.undones}}</div>
+   
+    <!-- <div v-if="vm.undones>0">Task not finished {{ vm.undones}}</div>
     <div v-else-if="vm.todos.length>0">All tasks are done!</div>
-    <div v-else>No tasks!</div>
+    <div v-else>No tasks!</div> -->
 
     
   </section>
@@ -106,10 +91,11 @@ import { observer } from "mobx-vue";
 import Vue from "vue";
 import { store } from "@/store/index";
 import VueyeDatepicker from "vueye-datepicker";
+// import { delete } from "vue/types/umd";
 
 Vue.config.keyCodes.atsign = 50;
 export default observer({
-  name: "addTodo",
+  name: "addNewTaskForm", 
   components: {
     VueyeDatepicker,
   },
@@ -119,6 +105,8 @@ export default observer({
       title: "",
       description: "",
       disabled: false,
+      visibleDate: true,
+      nameOfDateButton: "No date",
       date: {
         value: new Date(),
         formattedValue: "",
@@ -129,13 +117,11 @@ export default observer({
     };
   },
   methods: {
+    onCreateBtnClick(){
+      this.addNewTodo();
+    },
 
-
-    addNewTodo() {
-      
-     
-
-
+    addNewTodo() {        
       if (this.title !== "") {
         this.vm.addTodo(this.title, this.description, this.date.formattedValue, this.subtasks);
         this.title = "";
@@ -144,10 +130,32 @@ export default observer({
       }
     },
     
+    alertFullTitleField(){ //изменить цвет рамки Title на красный !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    },
+
     addSubTaskClick() {
      this.subtasks.push({title: ""});
      console.log('subtasks: ', this.subtasks);
     },
+
+    delSubTaskClick(i){
+      this.subtasks.splice(i, 1);
+    },
+
+    removeDateClick(){      
+      this.visibleDate = !this.visibleDate;
+      if (!this.visibleDate){
+        this.nameOfDateButton = "Set date";
+        this.date.value = "";
+        this.date.formattedValue = "";
+      } else{
+        this.nameOfDateButton = "No date";
+      }
+
+      
+      
+    }
     
   },
 });

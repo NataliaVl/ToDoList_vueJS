@@ -25,15 +25,18 @@
                   >03:37:22</button>
                 </div>
               </div>
-              <div class="bg-gray-400">
+              <div class="flex flex-col ml-6">
+                <div class="block content-start">
                 <label
                   class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
                   for="title"
                 >Подзадачи</label>
-              </div>
-              <div v-for="(sub,i) in todo.subtasks" :key="i">
+                </div>
+                <div v-for="(sub,i) in todo.subtasks" :key="i" class="block ">
                 {{sub.title}}                 
+                </div>
               </div>
+              
               
             </div>
           </div>
@@ -41,18 +44,18 @@
       </div>
     </div>
 
-    <add-todo />
+    <addNewTaskForm />
   </section>
 </template>
 <script>
 import { observer } from "mobx-vue";
 import { store } from "@/store/index";
-import addTodo from "./addTodo";
+import addNewTaskForm from "./addTodo";
 
 export default observer({
   name: "todo",
   components: {
-    addTodo,
+    addNewTaskForm,
   },
   data() {
     return { vm: store };
