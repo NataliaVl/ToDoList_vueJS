@@ -1,21 +1,15 @@
 <template>
-  <section>
-    <div class="px-64 w-full items-center justify-center">
-      <div class="w-full px-2 mt-2">
         <div
-          v-for="(todo, i) in vm.todos"
-          :key="i"
-          class="task-item bg-white shadow-xl rounded-lg overflow-hidden md:flex border-solid border-l-8 border-green-600 my-2"
+          class="task-item bg-white shadow-xl rounded-lg overflow-hidden md:flex border-solid border-l-8  my-2"
+          :class="{'border-red-600': !todo.isDone, 'border-green-600': todo.isDone}"
         >
           <div class="w-full">
             <div class="p-4 md:p-5 bg-gray-100">
               <div class="flex justify-between items-center">
                 
                 <div>
-                  <div>
-
-                  
-                  <input type="checkbox" class="form-checkbox text-green-600 h-8 w-8" @click="checkboxClick(i)">
+                  <div>                  
+                  <input type="checkbox" class="form-checkbox text-green-600 h-8 w-8" @click="checkboxClick(todo.id)">
 
                   <!-- <div class="bg-white shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
                 <input type="checkbox" class="bg-white" @click="checkboxClick()">
@@ -32,7 +26,7 @@
                     <span class="text-gray-700 font-light uppercase">Дата выполнения задачи</span>
                     <span class="text-gray-700 font-light uppercase">{{todo.date}}</span>
                   </div>
-                  <button @click="updateTaskClick(i)"
+                  <button
                     class=" bg-gray-600 hover:bg-gray-700 block uppercase tracking-wide text-white text-base font-semibold py-2 px-4  border border-gray-400 rounded shadow"
                   >change task</button>
                 </div>
@@ -44,7 +38,7 @@
                   for="title"
                 >Подзадачи</label>
                 </div>
-                <div v-for="(sub,i) in todo.subtasks" :key="i" class="block ">
+                <div v-for="(sub,j) in todo.subtasks" :key="j" class="block ">
                   <div>
                     <input type="checkbox" class="form-checkbox text-green-600 h-4 w-4">
                     {{sub.title}} 
@@ -56,53 +50,35 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <addNewTaskForm />
-    <updataTaskForm v-if="showUpdataTaskForm"/>
-  </section>
 </template>
+
 <script>
 import { observer } from "mobx-vue";
+import Vue from "vue";
 import { store } from "@/store/index";
-import addNewTaskForm from "./addTodo";
-import updataTaskForm from "./updataTodo";
 
+// import { delete } from "vue/types/umd";
+
+Vue.config.keyCodes.atsign = 50;
 export default observer({
-  name: "todo",
-  components: {
-    addNewTaskForm,
-    updataTaskForm
-  },
+  name: "task", 
+  components: { },
+  props: ['todo'],
   data() {
-    return { 
-      vm: store,
-      showUpdataTaskForm: false,
-      index: "",
-      };
+    return {
+     vm: store ,
+      disabled: false,
+      visibleDate: true,
+      nameOfDateButton: "No date",
+     
+
+    };
   },
   methods: {
-    removeTodo(id) {
-      this.vm.removeTodo(id);
-    },
-    checkboxClick(i){      
+   checkboxClick(i){      
       this.vm.changeFlag(i);
-      console.log('id: ', i);
-      console.log(this.vm.todos[i].isDone);
-      console.log('this.vm.todos: ', this.vm.todos);    
     },
-    updateTaskClick(i){
-      this.showUpdataTaskForm = true;
-      this.index = i;
-    }
   },
 });
+
 </script>
-
-<style>
-    .custom-label input:checked + svg {
-        display: block !important;
-    }
-
-</style>

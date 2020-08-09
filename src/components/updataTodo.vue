@@ -1,7 +1,5 @@
 <template>
   <section class="px-64">
-    <div v-if="!isHidden" id="test_id">HELLO</div>
-    <button @click="() => {isHidden = !isHidden}">{{isHidden?'SHOW':'HIDE'}}</button>
     <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
       <div class="-mx-3 md:flex mb-6">
         <div class="md:w-1/2 px-3 mb-6 md:mb-0">
@@ -15,6 +13,7 @@
             class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
             id="title"
             type="text"
+            value="this.vm.todos[this.index].title"
           />
           <p class="text-red text-xs italic">Please fill out this field.</p>
         </div>
@@ -75,7 +74,7 @@
       </div>
       <div class="flex justify-center md:w-full px-3">
         <button @click="onCreateBtnClick()" class="bg-gray-600 hover:bg-gray-700 block uppercase tracking-wide text-white text-base mb-2 font-semibold py-2 px-4 mr-2 border border-gray-400 rounded shadow" :disabled="title===''">
-            Add Task
+            Updata Task
           </button>
       </div>     
     </div>
@@ -93,11 +92,11 @@ import { observer } from "mobx-vue";
 import Vue from "vue";
 import { store } from "@/store/index";
 import VueyeDatepicker from "vueye-datepicker";
-// import { delete } from "vue/types/umd";
+// import todoList from "./todoList";
 
 Vue.config.keyCodes.atsign = 50;
 export default observer({
-  name: "addNewTaskForm", 
+  name: "updataTaskForm", 
   components: {
     VueyeDatepicker,
   },
@@ -113,15 +112,17 @@ export default observer({
         value: new Date(),
         formattedValue: "",
       },
-  
+    //   index: todoList.data.index,  
+      index: "0",
       subtasks: [],  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      vm: store, //хранилище как свойство vm  
-      isHidden: false
+      vm: store, //хранилище как свойство vm      
     };
   },
   methods: {
     onCreateBtnClick(){
-      this.addNewTodo();
+      //this.addNewTodo();
+      console.log(this.vm.todos[this.index].title);
+      console.log('this.vm.todos: ', this.vm.todos);
     },
 
     addNewTodo() {        
@@ -133,9 +134,9 @@ export default observer({
       }
     },
     
-    // alertFullTitleField(){ //изменить цвет рамки Title на красный !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    alertFullTitleField(){ //изменить цвет рамки Title на красный !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-    // },
+    },
 
     addSubTaskClick() {
       if (this.subtasks.length < 10){
@@ -168,8 +169,5 @@ export default observer({
 });
 
 </script>
-<style scoped lang="css">
-  #test_id{
-      color: red;
-  }
+<style>
 </style>
