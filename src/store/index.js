@@ -13,6 +13,13 @@ export default class TodoList{
         this.todos[task.id] = task;
     }
     @action
+    updataTodo(id, title, description, date, subtasks){
+        this.todos[id].title = title;
+        this.todos[id].description = description;
+        this.todos[id].date = date;
+        this.todos[id].subtasks = subtasks;
+    }
+    @action
     removeTodo(id){
         this.todos = this.todos.filter(item=>item.id!==id);
     }
@@ -20,8 +27,7 @@ export default class TodoList{
     changeFlag(i){     
         console.log('i: ', i);   
         console.log('i: ', this.todos);   
-        this.todos[i].isDone = !this.todos[i].isDone;
-        
+        this.todos[i].isDone = !this.todos[i].isDone;        
     }
     
 }

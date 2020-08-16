@@ -12,11 +12,15 @@
           <input
             v-model="title"
             placeholder="Task"
-            class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
+            class="appearance-none block w-full  text-grey-darker border border-red rounded py-3 px-4 mb-3"
+            :class="{'border-red-600': titleTaskEmpty, 'bg-grey-lighter': !titleTaskEmpty}"
             id="title"
             type="text"
+            @input="checkTitleTaskEmpty()"
           />
-          <p class="text-red text-xs italic">Please fill out this field.</p>
+          <p class=" text-xs italic"
+          :class="{'text-red-600': titleTaskEmpty, 'text-grey-600': !titleTaskEmpty}"
+          >Please fill out this field.</p>
         </div>
         <div class="md:w-1/2 px-3">
           <label
@@ -24,10 +28,18 @@
             for="completion-date"
           >Дата выполнения задачи</label>
           <div class="flex justify-between">
-          <vueye-datepicker v-if="visibleDate" v-model="date" placeholder="Date" color="#4466ee" format="dd-mm-yyyy" class="py-3 px-4"/>          
-            <button @click="removeDateClick()" class="bg-white hover:bg-gray-100 block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 font-semibold py-2 px-4 mr-2 border border-gray-400 rounded shadow">
-            {{nameOfDateButton}}
-          </button>
+            <vueye-datepicker
+              v-if="visibleDate"
+              v-model="date"
+              placeholder="Date"
+              color="#4466ee"
+              format="dd-mm-yyyy"
+              class="py-3 px-4"
+            />
+            <button
+              @click="removeDateClick()"
+              class="bg-white hover:bg-gray-100 block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 font-semibold py-2 px-4 mr-2 border border-gray-400 rounded shadow"
+            >{{nameOfDateButton}}</button>
           </div>
         </div>
       </div>
@@ -43,7 +55,6 @@
             id="description"
             type="text"
             placeholder="Description"
-        
           />
           <!-- <p class="text-grey-dark text-xs italic">Make it as long and as crazy as you'd like</p> -->
         </div>
@@ -51,40 +62,40 @@
 
       <div class="md:w-1/2 mb-6 md:mb-0">
         <label
-          class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"          
+          class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
         >Подзадачи</label>
-        <div class="flex flex-col items-start ">
+        <div class="flex flex-col items-start">
           <div class="flex" v-for="(sub, i) in subtasks" :key="i">
-            <input 
-            class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 my-1"
-            id="subt"
-            type="text"
-            placeholder="Subtask"
-            v-model="subtasks[i].title"
-          />
-          <button @click="delSubTaskClick(i)" class="bg-white hover:bg-gray-100 block uppercase tracking-wide text-grey-darker text-xs font-bold my-1 font-semibold py-2 px-4 mx-1 border border-gray-400 rounded shadow">
-            Del
-          </button>
+            <input
+              class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 my-1"
+              id="subt"
+              type="text"
+              placeholder="Subtask"
+              v-model="subtasks[i].title"
+            />
+            <button
+              @click="delSubTaskClick(i)"
+              class="bg-white hover:bg-gray-100 block uppercase tracking-wide text-grey-darker text-xs font-bold my-1 font-semibold py-2 px-4 mx-1 border border-gray-400 rounded shadow"
+            >Del</button>
           </div>
-          
-          
         </div>
-        <button @click="addSubTaskClick()" class="bg-white hover:bg-gray-100 block uppercase tracking-wide text-grey-darker text-xs font-bold my-2 font-semibold py-2 px-4 mr-2 border border-gray-400 rounded shadow">
-            Add Subtask
-          </button>
+        <button
+          @click="addSubTaskClick()"
+          class="bg-white hover:bg-gray-100 block uppercase tracking-wide text-grey-darker text-xs font-bold my-2 font-semibold py-2 px-4 mr-2 border border-gray-400 rounded shadow"
+        >Add Subtask</button>
       </div>
       <div class="flex justify-center md:w-full px-3">
-        <button @click="onCreateBtnClick()" class="bg-gray-600 hover:bg-gray-700 block uppercase tracking-wide text-white text-base mb-2 font-semibold py-2 px-4 mr-2 border border-gray-400 rounded shadow" :disabled="title===''">
-            Add Task
-          </button>
-      </div>     
+        <button
+          @click="onCreateBtnClick()"
+          class="bg-gray-600 hover:bg-gray-700 block uppercase tracking-wide text-white text-base mb-2 font-semibold py-2 px-4 mr-2 border border-gray-400 rounded shadow"
+          :disabled="title===''"
+        >Add Task</button>
+      </div>
     </div>
-   
+
     <!-- <div v-if="vm.undones>0">Task not finished {{ vm.undones}}</div>
     <div v-else-if="vm.todos.length>0">All tasks are done!</div>
-    <div v-else>No tasks!</div> -->
-
-    
+    <div v-else>No tasks!</div>-->
   </section>
 </template>
 
@@ -97,11 +108,11 @@ import VueyeDatepicker from "vueye-datepicker";
 
 Vue.config.keyCodes.atsign = 50;
 export default observer({
-  name: "addNewTaskForm", 
+  name: "addNewTaskForm",
   components: {
     VueyeDatepicker,
   },
-  props: ['sub'],
+  // props: ['sub'],
   data() {
     return {
       title: "",
@@ -113,63 +124,83 @@ export default observer({
         value: new Date(),
         formattedValue: "",
       },
-  
-      subtasks: [],  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      vm: store, //хранилище как свойство vm  
-      isHidden: false
+
+      subtasks: [], //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      vm: store, //хранилище как свойство vm
+      isHidden: false,
+      titleTaskEmpty: true,
     };
   },
   methods: {
-    onCreateBtnClick(){
+    onCreateBtnClick() {
       this.addNewTodo();
     },
 
-    addNewTodo() {        
+    addNewTodo() {
       if (this.title !== "") {
-        this.vm.addTodo(this.title, this.description, this.date.formattedValue, this.subtasks);
+        this.vm.addTodo(
+          this.title,
+          this.description,
+          this.date.formattedValue,
+          this.subtasks
+        );
         this.title = "";
         this.description = "";
-        this.subtasks = [];        
+        this.subtasks = [];
       }
     },
-    
+
     // alertFullTitleField(){ //изменить цвет рамки Title на красный !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     // },
 
     addSubTaskClick() {
-      if (this.subtasks.length < 10){
-        this.subtasks.push({title: ""});
-        console.log('subtasks: ', this.subtasks);
-      }else{
-        alert("Егор не разрешает более 10 подзадач");
-      }     
+      if (this.subtasks.length != 0) {
+        ///222222222222222222222222222222222222
+        // if (this.subtasks[this.subtasks.length - 2].title !== "") {
+        if (this.subtasks.length < 10) {
+          this.subtasks.push({ title: "" });
+          console.log(
+            "this.subtasks[this.subtasks.length - 2].title: ",
+            this.subtasks[this.subtasks.length - 2].title
+          );
+          console.log(
+            "typeof: ",
+            typeof this.subtasks[this.subtasks.length - 2].title
+          );
+          console.log("this.subtasks.length: ", this.subtasks.length - 2);
+          console.log("subtasks: ", this.subtasks);
+        } else {
+          alert("Егор не разрешает более 10 подзадач");
+        }
+      } else {
+        this.subtasks.push({ title: "" });
+      }
     },
 
-    delSubTaskClick(i){
+    delSubTaskClick(i) {
       this.subtasks.splice(i, 1);
     },
 
-    removeDateClick(){      
+    removeDateClick() {
       this.visibleDate = !this.visibleDate;
-      if (!this.visibleDate){
+      if (!this.visibleDate) {
         this.nameOfDateButton = "Set date";
         this.date.value = "";
         this.date.formattedValue = "";
-      } else{
+      } else {
         this.nameOfDateButton = "No date";
       }
-
-      
-      
-    }
-    
+    },
+    checkTitleTaskEmpty() { 
+      if (this.title.length == 0) this.titleTaskEmpty = true;
+      else this.titleTaskEmpty = false;
+    },
   },
 });
-
 </script>
 <style scoped lang="css">
-  #test_id{
-      color: red;
-  }
+#test_id {
+  color: red;
+}
 </style>

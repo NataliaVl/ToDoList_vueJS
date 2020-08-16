@@ -2,8 +2,11 @@
   <div class="home">  
       
     <!-- <todoList/> -->
-    <undoneTask onDataChange=onDataChange/>
-    <addNewTaskForm myData=myData/>
+    <undoneTask @taskId="Id=$event"/>    <!-- <undoneTask onDataChange=onDataChange/> !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+    <doneTask/>
+    <addNewTaskForm/>     <!-- <addNewTaskForm myData=myData/> !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->   
+    <!-- <updataTaskForm/> -->
+    <p>{{Id}}</p>
   </div>
 </template>
 
@@ -11,21 +14,29 @@
 // @ is an alias to /src
 // import todoList from '@/components/todoList.vue'
 import undoneTask from '@/components/undoneTask.vue'
+import doneTask from '@/components/doneTask.vue'
 import addNewTaskForm from '@/components/addTodo.vue'
-import addNewTaskForm from '@/components/u.vue'
+
+// import updataTaskForm from '@/components/updataTodo.vue'
 
 export default {
   name: 'Home',
   components: {
     // todoList,
+    doneTask,    
+    undoneTask,    
     addNewTaskForm,
-    undoneTask
+    // updataTaskForm
   },
-
-  method: {
-    onDataChange(newId) {
-        this.myData.id = newId;
+  data() {
+    return {
+      Id:"hjksdfk"
     }
+  },
+  method: {
+    // onDataChange(newId) { !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //     this.myData.id = newId;
+    // }
   }
 }
 </script>

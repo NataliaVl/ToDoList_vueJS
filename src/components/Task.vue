@@ -1,7 +1,7 @@
 <template>
         <div
           class="task-item bg-white shadow-xl rounded-lg overflow-hidden md:flex border-solid border-l-8  my-2"
-          :class="{'border-red-600': !todo.isDone, 'border-green-600': todo.isDone}"
+          :class="{'border-red-600': !todo.isDone, 'border-green-600': todo.isDone}" 
         >
           <div class="w-full">
             <div class="p-4 md:p-5 bg-gray-100">
@@ -9,7 +9,8 @@
                 
                 <div>
                   <div>                  
-                  <input type="checkbox" class="form-checkbox text-green-600 h-8 w-8" @click="checkboxClick(todo.id)">
+                  <input v-if="todo.isDone" type="checkbox" class="form-checkbox text-green-600 h-8 w-8" @click="checkboxClick(todo.id)" checked>
+                  <input v-else type="checkbox" class="form-checkbox text-green-600 h-8 w-8" @click="checkboxClick(todo.id)" >
 
                   <!-- <div class="bg-white shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
                 <input type="checkbox" class="bg-white" @click="checkboxClick()">
@@ -28,6 +29,7 @@
                   </div>
                   <button
                     class=" bg-gray-600 hover:bg-gray-700 block uppercase tracking-wide text-white text-base font-semibold py-2 px-4  border border-gray-400 rounded shadow"
+                    @click="sendData(todo.id)"
                   >change task</button>
                 </div>
               </div>
@@ -49,6 +51,7 @@
               
             </div>
           </div>
+          
         </div>
 </template>
 
@@ -57,12 +60,15 @@ import { observer } from "mobx-vue";
 import Vue from "vue";
 import { store } from "@/store/index";
 
+
 // import { delete } from "vue/types/umd";
 
 Vue.config.keyCodes.atsign = 50;
 export default observer({
   name: "task", 
-  components: { },
+  components: { 
+    
+    },
   props: ['todo'],
   data() {
     return {
@@ -78,7 +84,14 @@ export default observer({
    checkboxClick(i){      
       this.vm.changeFlag(i);
     },
+    sendData(id){
+    console.log('uuid: ', id);
+
+    this.$emit('taskId', id);
+    this.$emit('changeTask', true);
+  }
   },
+  
 });
 
 </script>
