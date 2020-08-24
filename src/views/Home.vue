@@ -1,12 +1,17 @@
 <template>
-  <div class="home">  
-      
+<div>
+  <!-- <div class="home" v-if="vm.isFetching === false">   -->
+  <div class="home">    
     <!-- <todoList/> -->
-    <undoneTask @taskId="Id=$event"/>    <!-- <undoneTask onDataChange=onDataChange/> !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+    <undoneTask />    <!-- <undoneTask onDataChange=onDataChange/> !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
     <doneTask/>
     <addNewTaskForm/>     <!-- <addNewTaskForm myData=myData/> !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->   
     <!-- <updataTaskForm/> -->
-    <p>{{Id}}</p>
+    
+  </div>
+  <!-- <div v-else>
+    обработка запроса
+  </div> -->
   </div>
 </template>
 
@@ -16,6 +21,7 @@
 import undoneTask from '@/components/undoneTask.vue'
 import doneTask from '@/components/doneTask.vue'
 import addNewTaskForm from '@/components/addTodo.vue'
+import { store } from "@/store/index";
 
 // import updataTaskForm from '@/components/updataTodo.vue'
 
@@ -30,7 +36,7 @@ export default {
   },
   data() {
     return {
-      Id:"hjksdfk"
+      vm: store, 
     }
   },
   method: {

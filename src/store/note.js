@@ -15,10 +15,10 @@ export default class Node {
     @observable isDone = false;
     @observable subtasks; 
     constructor(title, description, date, subtasks) {
-        this.title = title;
-        this.description = description;
-        this.date = date;
-        this.subtasks = subtasks;
+      this.title = title;
+      this.description = description;
+      this.date = date;
+      this.subtasks = subtasks;
     }
 }
 

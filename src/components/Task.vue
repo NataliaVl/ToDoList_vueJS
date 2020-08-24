@@ -9,8 +9,9 @@
                 
                 <div>
                   <div>                  
-                  <input v-if="todo.isDone" type="checkbox" class="form-checkbox text-green-600 h-8 w-8" @click="checkboxClick(todo.id)" checked>
-                  <input v-else type="checkbox" class="form-checkbox text-green-600 h-8 w-8" @click="checkboxClick(todo.id)" >
+                
+
+                  <input type="checkbox" class="form-checkbox text-green-600 h-8 w-8" @click="checkboxClick(todo.id)" :checked="todo.isDone">
 
                   <!-- <div class="bg-white shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
                 <input type="checkbox" class="bg-white" @click="checkboxClick()">
@@ -29,20 +30,20 @@
                   </div>
                   <button
                     class=" bg-gray-600 hover:bg-gray-700 block uppercase tracking-wide text-white text-base font-semibold py-2 px-4  border border-gray-400 rounded shadow"
-                    @click="sendData(todo.id)"
+                    @click="vm.changeTask(todo.id)"
                   >change task</button>
                 </div>
               </div>
               <div class="flex flex-col ml-6">
                 <div class="block content-start">
-                <label
+                <label v-if="todo.subtasks.length !== 0"
                   class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
                   for="title"
                 >Подзадачи</label>
                 </div>
                 <div v-for="(sub,j) in todo.subtasks" :key="j" class="block ">
                   <div>
-                    <input type="checkbox" class="form-checkbox text-green-600 h-4 w-4">
+                    <input type="checkbox" class="form-checkbox text-green-600 h-4 w-4" @click="changeSubFlag(todo.id, j)" :checked="todo.subtasks[j].flag">
                     {{sub.title}} 
                   </div>                
                 </div>
@@ -81,15 +82,17 @@ export default observer({
     };
   },
   methods: {
-   checkboxClick(i){      
+    checkboxClick(i){      
       this.vm.changeFlag(i);
     },
-    sendData(id){
-    console.log('uuid: ', id);
-
-    this.$emit('taskId', id);
-    this.$emit('changeTask', true);
-  }
+    changeSubFlag(id, j){
+      console.log('this.todos[id].subtasks[j].flag1: ', this.todo.subtasks[j].flag);
+      this.todo.subtasks[j].flag = !this.todo.subtasks[j].flag;
+      console.log('this.todos[id].subtasks[j].flag2: ', this.todo.subtasks[j].flag);
+      // this.vm.changeSubFlag(id, j);
+      console.log('id: ', id);
+      console.log('j: ', j);
+    }
   },
   
 });

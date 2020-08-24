@@ -1,7 +1,7 @@
 <template>
   <section class="px-64">
-    <div v-if="!isHidden" id="test_id">HELLO</div>
-    <button @click="() => {isHidden = !isHidden}">{{isHidden?'SHOW':'HIDE'}}</button>
+    <!-- <div v-if="!isHidden" id="test_id">HELLO</div> -->
+    <!-- <button @click="() => {isHidden = !isHidden}">{{isHidden?'SHOW':'HIDE'}}</button> -->
     <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
       <div class="-mx-3 md:flex mb-6">
         <div class="md:w-1/2 px-3 mb-6 md:mb-0">
@@ -149,33 +149,46 @@ export default observer({
         this.subtasks = [];
       }
     },
-
+ 
     // alertFullTitleField(){ //изменить цвет рамки Title на красный !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     // },
 
     addSubTaskClick() {
-      if (this.subtasks.length != 0) {
-        ///222222222222222222222222222222222222
-        // if (this.subtasks[this.subtasks.length - 2].title !== "") {
-        if (this.subtasks.length < 10) {
-          this.subtasks.push({ title: "" });
-          console.log(
-            "this.subtasks[this.subtasks.length - 2].title: ",
-            this.subtasks[this.subtasks.length - 2].title
-          );
-          console.log(
-            "typeof: ",
-            typeof this.subtasks[this.subtasks.length - 2].title
-          );
-          console.log("this.subtasks.length: ", this.subtasks.length - 2);
-          console.log("subtasks: ", this.subtasks);
-        } else {
-          alert("Егор не разрешает более 10 подзадач");
-        }
-      } else {
-        this.subtasks.push({ title: "" });
+      // if (this.subtasks.length != 0) {
+      //   ///222222222222222222222222222222222222
+      //   //if (this.subtasks[this.subtasks.length - 2].title !== "") {
+      //   if (this.subtasks.length < 10) {
+      //     this.subtasks.push({ title: "" });
+      //     console.log(
+      //       "this.subtasks[this.subtasks.length - 2].title: ",
+      //       this.subtasks[this.subtasks.length - 2].title
+      //     );
+      //     console.log(
+      //       "typeof: ",
+      //       typeof this.subtasks[this.subtasks.length - 2].title
+      //     );
+      //     console.log("this.subtasks.length: ", this.subtasks.length - 2);
+      //     console.log("subtasks: ", this.subtasks);
+      //   } else {
+      //     alert("Егор не разрешает более 10 подзадач");
+      //   }
+      // } else {
+      //   this.subtasks.push({ title: "" });
+      // }
+
+      if (this.subtasks.length >= 10) {
+         alert("Егор не разрешает более 10 подзадач");
+         return;
       }
+
+      if (this.subtasks.length !== 0 && this.subtasks[this.subtasks.length-1].title === '') {
+        alert("заполните последнюю подзадачу");
+         return;
+      }
+
+      this.subtasks.push({ title: "", flag: false });
+       
     },
 
     delSubTaskClick(i) {

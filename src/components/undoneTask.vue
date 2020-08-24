@@ -16,7 +16,7 @@
     </div>
     </section>
     <section>
-      <updataTaskForm v-if="change" :msg="id"/>
+      <updataTaskForm v-if="vm.change_form.flag" />
     </section>
    
 </div>
