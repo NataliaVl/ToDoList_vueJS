@@ -1,7 +1,7 @@
 <template>
 <div>    
      <section>
-       <p>сделанные задачи</p>
+       <p class="uppercase  text-grey-darker text-l font-bold ">сделанные задачи</p>
     <div class="px-64 w-full items-center justify-center">
       <div class="w-full px-2 mt-2">
         <Task
@@ -14,6 +14,7 @@
       </div>
     </div>
     </section>
+    <updataTaskForm v-if="vm.change_form.flag" />
 </div>
 </template>
 

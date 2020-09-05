@@ -59,8 +59,8 @@
           <!-- <p class="text-grey-dark text-xs italic">Make it as long and as crazy as you'd like</p> -->
         </div>
       </div>
-
-      <div class="md:w-1/2 mb-6 md:mb-0">
+      <div class="flex">
+        <div class=" md:w-2/3 mb-6 md:mb-0">
         <label
           class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
         >Подзадачи</label>
@@ -84,6 +84,34 @@
           class="bg-white hover:bg-gray-100 block uppercase tracking-wide text-grey-darker text-xs font-bold my-2 font-semibold py-2 px-4 mr-2 border border-gray-400 rounded shadow"
         >Add Subtask</button>
       </div>
+
+      <div class=" md:w-1/3 mb-6 md:mb-0 justify-center">     
+        <label
+          class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+        >Приоритет задачи</label>   
+        <div class="flex md:w-full content-end">
+          <button
+          @click="selectPriority(0)"
+          class="bg-white hover:bg-red-700 hover:text-white block uppercase tracking-wide text-red-600 text-xs font-bold my-2 font-semibold py-2 px-4 mr-2 border border-red-700 rounded shadow"
+          >high</button>
+          <button
+          @click="selectPriority(1)"
+          class="bg-white hover:bg-yellow-700 hover:text-white block uppercase tracking-wide text-yellow-700 text-xs font-bold my-2 font-semibold py-2 px-4 mr-2 border border-yellow-700 rounded shadow"
+          >medium</button>
+          <button
+          @click="selectPriority(2)"
+          class="bg-white hover:bg-green-700 hover:text-white block uppercase tracking-wide text-green-600 text-xs font-bold my-2 font-semibold py-2 px-4 mr-2 border border-green-700 rounded shadow"
+          >low</button>
+          <button
+          @click="selectPriority(3)"
+          class="bg-white hover:bg-indigo-700 hover:text-white block uppercase tracking-wide text-indigo-700 text-xs font-bold my-2 font-semibold py-2 px-4 mr-2 border border-indigo-700 rounded shadow"
+          >no</button>
+        </div>
+        
+      </div>
+      </div>
+      
+
       <div class="flex justify-center md:w-full px-3">
         <button
           @click="onCreateBtnClick()"
@@ -125,15 +153,19 @@ export default observer({
         formattedValue: "",
       },
 
-      subtasks: [], //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      subtasks: [], 
       vm: store, //хранилище как свойство vm
       isHidden: false,
       titleTaskEmpty: true,
+      priority: {position: 3, title: "no"},
+      hashtag: []
     };
   },
   methods: {
     onCreateBtnClick() {
+      this.selectHashtag();
       this.addNewTodo();
+      // console.log(this.vm.todos)
     },
 
     addNewTodo() {
@@ -142,53 +174,57 @@ export default observer({
           this.title,
           this.description,
           this.date.formattedValue,
-          this.subtasks
+          this.subtasks,
+          this.priority,
+          this.hashtag
         );
         this.title = "";
         this.description = "";
         this.subtasks = [];
+        this.priority =  {position: 3, title: "no"};
+        this.hashtag = [];
       }
     },
  
-    // alertFullTitleField(){ //изменить цвет рамки Title на красный !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    selectPriority(i){
+      switch (i){
+        case 0: 
+          this.priority = {position: 0, title: "high"};
+          break;
+        case 1: 
+          this.priority = {position: 1, title: "medium"};
+          break;
+        case 2: 
+          this.priority = {position: 2, title: "low"};
+          break;
+        case 3: 
+          this.priority = {position: 3, title: "no"};
+          break;        
+      }
+    },
 
-    // },
+    selectHashtag(){
+      let arrDescr = this.description.split(' ');
+
+      for (let index = 0; index < arrDescr.length; index++) {   
+        if (arrDescr[index].startsWith("#")) {
+          if(arrDescr[index].length > 1){
+            this.hashtag.push(arrDescr[index]); 
+          }                   
+        }
+      }
+    },
 
     addSubTaskClick() {
-      // if (this.subtasks.length != 0) {
-      //   ///222222222222222222222222222222222222
-      //   //if (this.subtasks[this.subtasks.length - 2].title !== "") {
-      //   if (this.subtasks.length < 10) {
-      //     this.subtasks.push({ title: "" });
-      //     console.log(
-      //       "this.subtasks[this.subtasks.length - 2].title: ",
-      //       this.subtasks[this.subtasks.length - 2].title
-      //     );
-      //     console.log(
-      //       "typeof: ",
-      //       typeof this.subtasks[this.subtasks.length - 2].title
-      //     );
-      //     console.log("this.subtasks.length: ", this.subtasks.length - 2);
-      //     console.log("subtasks: ", this.subtasks);
-      //   } else {
-      //     alert("Егор не разрешает более 10 подзадач");
-      //   }
-      // } else {
-      //   this.subtasks.push({ title: "" });
-      // }
-
       if (this.subtasks.length >= 10) {
          alert("Егор не разрешает более 10 подзадач");
          return;
       }
-
       if (this.subtasks.length !== 0 && this.subtasks[this.subtasks.length-1].title === '') {
         alert("заполните последнюю подзадачу");
          return;
       }
-
-      this.subtasks.push({ title: "", flag: false });
-       
+      this.subtasks.push({ title: "", flag: false });       
     },
 
     delSubTaskClick(i) {

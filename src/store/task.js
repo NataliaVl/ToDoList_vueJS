@@ -7,18 +7,22 @@ function uuidv4() {
     );
   }
 
-export default class Node {
+export default class Task {
     id = uuidv4(); // UUID
     @observable title;  
     @observable description;  
     @observable date;  
     @observable isDone = false;
     @observable subtasks; 
-    constructor(title, description, date, subtasks) {
+    @observable priority;
+    @observable hashtag;
+    constructor(title, description, date, subtasks, priority, hashtag) {
       this.title = title;
       this.description = description;
       this.date = date;
       this.subtasks = subtasks;
+      this.priority = priority;
+      this.hashtag = hashtag;
     }
 }
 

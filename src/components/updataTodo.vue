@@ -11,10 +11,15 @@
             v-model="vm.change_form.title"
             placeholder="Task"
             class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
+            :class="{'border-red-600': titleTaskEmpty, 'bg-grey-lighter': !titleTaskEmpty}"
             id="title"
-            type="text"            
+            type="text"  
+            @input="checkTitleTaskEmpty()"          
           />
-          <p class="text-red text-xs italic">Please fill out this field.</p>
+          <p class=" text-xs italic"
+          :class="{'text-red-600': titleTaskEmpty, 'text-grey-600': !titleTaskEmpty}"
+          >Please fill out this field.</p>
+            
         </div>
         <div class="md:w-1/2 px-3">
           <label
@@ -44,31 +49,55 @@
           />
         </div>
       </div>
-
-      <div class="md:w-1/2 mb-6 md:mb-0">
-        <label
-          class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"          
-        >Подзадачи</label>
-        <div class="flex flex-col items-start ">
-          <div class="flex" v-for="(sub, i) in vm.change_form.subtasks" :key="i">
-            <input 
-            v-model="vm.change_form.subtasks[i].title"
-            class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 my-1"
-            type="text"
-            placeholder="Subtask"
-            
-          />
-          <button @click="delSubTaskClick(i)" class="bg-white hover:bg-gray-100 block uppercase tracking-wide text-grey-darker text-xs font-bold my-1 font-semibold py-2 px-4 mx-1 border border-gray-400 rounded shadow">
-            Del
-          </button>
+        
+      <div class="flex">
+        <div class="md:w-2/3 mb-6 md:mb-0">
+          <label
+            class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"          
+          >Подзадачи</label>
+          <div class="flex flex-col items-start ">
+            <div class="flex" v-for="(sub, i) in vm.change_form.subtasks" :key="i">
+              <input 
+              v-model="vm.change_form.subtasks[i].title"
+              class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 my-1"
+              type="text"
+              placeholder="Subtask"
+              
+            />
+            <button @click="delSubTaskClick(i)" class="bg-white hover:bg-gray-100 block uppercase tracking-wide text-grey-darker text-xs font-bold my-1 font-semibold py-2 px-4 mx-1 border border-gray-400 rounded shadow">
+              Del
+            </button>
+            </div>  
           </div>
-          
-          
+          <button @click="addSubTaskClick" class="bg-white hover:bg-gray-100 block uppercase tracking-wide text-grey-darker text-xs font-bold my-2 font-semibold py-2 px-4 mr-2 border border-gray-400 rounded shadow">
+              Add Subtask
+            </button>
         </div>
-        <button @click="addSubTaskClick" class="bg-white hover:bg-gray-100 block uppercase tracking-wide text-grey-darker text-xs font-bold my-2 font-semibold py-2 px-4 mr-2 border border-gray-400 rounded shadow">
-            Add Subtask
-          </button>
+        <div class=" md:w-1/3 mb-6 md:mb-0 justify-center">     
+          <label
+            class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+          >Приоритет задачи</label>   
+          <div class="flex md:w-full content-end">
+            <button
+            @click="selectPriority(0)"
+            class="bg-white hover:bg-red-700 hover:text-white block uppercase tracking-wide text-red-600 text-xs font-bold my-2 font-semibold py-2 px-4 mr-2 border border-red-700 rounded shadow"
+            >high</button>
+            <button
+            @click="selectPriority(1)"
+            class="bg-white hover:bg-yellow-700 hover:text-white block uppercase tracking-wide text-yellow-700 text-xs font-bold my-2 font-semibold py-2 px-4 mr-2 border border-yellow-700 rounded shadow"
+            >medium</button>
+            <button
+            @click="selectPriority(2)"
+            class="bg-white hover:bg-green-700 hover:text-white block uppercase tracking-wide text-green-600 text-xs font-bold my-2 font-semibold py-2 px-4 mr-2 border border-green-700 rounded shadow"
+            >low</button>
+            <button
+            @click="selectPriority(3)"
+            class="bg-white hover:bg-indigo-700 hover:text-white block uppercase tracking-wide text-indigo-700 text-xs font-bold my-2 font-semibold py-2 px-4 mr-2 border border-indigo-700 rounded shadow"
+            >no</button>
+          </div>          
+        </div>
       </div>
+      
       <div class="flex justify-center md:w-full px-3">
         <button @click="onUpdateBtnClick" class="bg-gray-600 hover:bg-gray-700 block uppercase tracking-wide text-white text-base mb-2 font-semibold py-2 px-4 mr-2 border border-gray-400 rounded shadow">
             Updata Task
@@ -94,7 +123,7 @@ export default observer({
 
   data() {
     return {
-      description: "",
+      newHash: "",
       disabled: false,
       visibleDate: true,
       nameOfDateButton: "No date",
@@ -103,12 +132,14 @@ export default observer({
         formattedValue: "",
       }, 
       index: "0",
-      vm: store,  
+      vm: store,        
+      titleTaskEmpty: true, 
     };
   },
   methods: {
     onUpdateBtnClick(){
-       this.vm.updateTodos();
+      this.selectHashtag();
+      this.vm.updateTodos();
     },
     
     addSubTaskClick() {
@@ -126,6 +157,38 @@ export default observer({
        
     },
 
+    selectHashtag(){
+      let arrDescr = this.vm.change_form.description.split(' ');
+      console.log('this.vm.change_form.description.split', this.vm.change_form.description.split(' '));
+      this.vm.change_form.hashtag.length = 0;
+      for (let index = 0; index < arrDescr.length; index++) {   
+        if (arrDescr[index].startsWith("#")) {
+          if(arrDescr[index].length > 1){
+            
+            this.vm.change_form.hashtag.push(arrDescr[index]); 
+          }                   
+        }
+      }
+      // this.vm.change_form.hashtag = this.newHash;
+    },
+
+    selectPriority(i){
+      switch (i){
+        case 0: 
+          this.vm.change_form.priority = {position: 0, title: "high"};
+          break;
+        case 1: 
+          this.vm.change_form.priority = {position: 1, title: "medium"};
+          break;
+        case 2: 
+          this.vm.change_form.priority = {position: 2, title: "low"};
+          break;
+        case 3: 
+          this.vm.change_form.priority = {position: 3, title: "no"};
+          break;        
+      }
+    },
+
     delSubTaskClick(i){
       // this.subtasks.splice(i, 1);
       this.vm.delSub(i);
@@ -141,9 +204,17 @@ export default observer({
         this.nameOfDateButton = "No date";
       }
     },    
+
+    checkTitleTaskEmpty() { 
+      if (this.vm.change_form.title == 0) this.titleTaskEmpty = true;
+      else this.titleTaskEmpty = false;
+    },
   },
 });
 
 </script>
-<style>
+<style scoped lang="css">
+#test_id {
+  color: red;
+}
 </style>

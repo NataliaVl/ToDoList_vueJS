@@ -8,22 +8,19 @@
               <div class="flex justify-between items-center">
                 
                 <div>
-                  <div>                  
+                  <div class="flex">                  
                 
 
-                  <input type="checkbox" class="form-checkbox text-green-600 h-8 w-8" @click="checkboxClick(todo.id)" :checked="todo.isDone">
-
-                  <!-- <div class="bg-white shadow w-6 h-6 p-1 flex justify-center items-center mr-2">
-                <input type="checkbox" class="bg-white" @click="checkboxClick()">
-                <svg v-if="checkBox" class="w-4 h-4 text-green-600 pointer-events-none" viewBox="0 0 172 172"><g fill="none" stroke-width="none" stroke-miterlimit="10" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode:normal"><path d="M0 172V0h172v172z"/><path d="M145.433 37.933L64.5 118.8658 33.7337 88.0996l-10.134 10.1341L64.5 139.1341l91.067-91.067z" fill="currentColor" stroke-width="1"/></g></svg> -->
-                  </div>
+                  <input type="checkbox" class="mb-4 mr-3 form-checkbox text-green-600 h-8 w-8" @click="checkboxClick(todo.id)" :checked="todo.isDone">
+                  
 
                   <p class="font-bold text-xl">{{todo.title}}</p>
+                  </div>
                   <div class="flex items-start">
-                    <span class="text-gray-700">{{todo.description}}</span>
+                    <span class="text-gray-700"> {{this.showDescrWithoutHashtag()}}</span> 
                   </div>
                 </div>
-                <div class="flex content-center ">
+                <div class="flex">
                   <div class="flex flex-col mx-5 ">
                     <span class="text-gray-700 font-light uppercase">Дата выполнения задачи</span>
                     <span class="text-gray-700 font-light uppercase">{{todo.date}}</span>
@@ -34,24 +31,44 @@
                   >change task</button>
                 </div>
               </div>
-              <div class="flex flex-col ml-6">
-                <div class="block content-start">
-                <label v-if="todo.subtasks.length !== 0"
-                  class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-                  for="title"
-                >Подзадачи</label>
+              <div class="flex">
+                <div class="flex flex-col ml-6 md:w-1/3">
+                  <div class="block content-start">
+                    <label v-if="todo.subtasks.length !== 0"
+                      class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+                      for="title"
+                    >Подзадачи</label>
+                  </div>
+                  <div v-for="(sub,j) in todo.subtasks" :key="j" class="flex justify-start">
+                    <div >
+                      <input type="checkbox" class="form-checkbox text-green-600 h-4 w-4" @click="changeSubFlag(todo.id, j)" :checked="todo.subtasks[j].flag">
+                      {{sub.title}} 
+                    </div>                
+                  </div>
                 </div>
-                <div v-for="(sub,j) in todo.subtasks" :key="j" class="block ">
-                  <div>
-                    <input type="checkbox" class="form-checkbox text-green-600 h-4 w-4" @click="changeSubFlag(todo.id, j)" :checked="todo.subtasks[j].flag">
-                    {{sub.title}} 
-                  </div>                
+                <div class="flex md:w-full justify-end">
+                  <span class=" font-bold p-2 m-2 text-xs font-light uppercase"
+                  :class="{'text-red-700': todo.priority.position === 0,
+                    'text-yellow-700': todo.priority.position === 1,
+                    'text-green-700': todo.priority.position === 2,
+                    'text-indigo-700': todo.priority.position === 3}" >
+                  {{todo.priority.title}} priority</span>
                 </div>
               </div>
               
+              <section class="flex justify-start">
+                <div v-for="(hash, i) in todo.hashtag" :key="i" class="flex inline-flex">
+                    <span class="rounded-full bg-gray-400 px-2 py-1 text-xs font-bold mr-3">
+                      {{hash}}
+                    </span>
+                  
+                </div>
+          </section>
               
             </div>
+            
           </div>
+          
           
         </div>
 </template>
@@ -77,8 +94,6 @@ export default observer({
       disabled: false,
       visibleDate: true,
       nameOfDateButton: "No date",
-     
-
     };
   },
   methods: {
@@ -92,6 +107,13 @@ export default observer({
       // this.vm.changeSubFlag(id, j);
       console.log('id: ', id);
       console.log('j: ', j);
+    },
+    showDescrWithoutHashtag(){
+      let arrDescr = this.todo.description.split(' ');
+      let arrDescriptionWithoutHashtag = arrDescr.filter(descr => !descr.startsWith("#"));
+
+      return arrDescriptionWithoutHashtag.join(" ");
+      
     }
   },
   
