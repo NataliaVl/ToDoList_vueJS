@@ -24,7 +24,8 @@ export default class TodoList{
         date: '',
         subtasks: [],
         hashtag: [],
-        priority: {}
+        priority: {},
+        isDone: ''
     };    
 
     @observable
@@ -53,10 +54,12 @@ export default class TodoList{
             title: this.todos[id].title,            
             description: this.todos[id].description,            
             subtasks: this.todos[id].subtasks, // ПОДЗАДАЧИ НЕ ИЗМЕНЯЮТСЯ, ПОЧЕМУ????????????????????????????????????
-            date: this.todos[id].date, //ОТОБРАЖАЕТСЯ СЕГОДНЯШНЯЯ ДАТА, А НЕ СОХРАНЕННАЯ      
+            date: this.todos[id].date,      
+            isDone: this.todos[id].isDone,
             hashtag: this.todos[id].hashtag,
             priority: this.todos[id].priority
         };
+        console.log('this.todos[id].date,: ', this.todos[id].date,);
         console.log('this.change_form1: ', this.change_form); //
     }
 
@@ -86,12 +89,15 @@ export default class TodoList{
     @action
     updateTodos(){
         console.log('this.change_form: ', this.change_form);
+        console.log('this.: ', this.todos);
+
         this.todos[this.change_form.id].title = this.change_form.title;
         this.todos[this.change_form.id].description = this.change_form.description;
         this.todos[this.change_form.id].subtasks = this.change_form.subtasks; 
         this.todos[this.change_form.id].priority = this.change_form.priority;
         this.change_form = {flag : false}; //после обновления задачи, форма исчезает
         console.log('this.change_form: ', this.change_form);
+        console.log('this.todos: ', this.todos);
     }
     @action
     removeTodo(id){
@@ -209,4 +215,6 @@ export default class TodoList{
     //     console.log('isFetching: ', this.isFetching);
     // }
 }
+
+
 export const store = new TodoList();

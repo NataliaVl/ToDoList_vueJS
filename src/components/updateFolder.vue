@@ -48,7 +48,7 @@
           :value="{id: project.id}"
           class="mr-2 leading-tight"
           type="checkbox"
-          :checked="vm.change_folder_form.idProject.includes(project.id)"
+          :checked="checkFolderIncludesProject(project.id)"
           
         />
         <!-- :checked="vm.folders[vm.change_folder_form.id].idProject.includes(project.id)" -->
@@ -113,6 +113,16 @@ export default observer({
         return true;
         }
       else return false
+    },
+    checkFolderIncludesProject(idProj){
+      let res = 0;
+      if(this.vm.change_folder_form.idProject.includes(idProj))
+      res = true;
+      else
+      res = false;
+      console.log('res: ', res);
+      return res;
+      
     }
   },
 });

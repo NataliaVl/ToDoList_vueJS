@@ -58,12 +58,14 @@
           <div class="flex flex-col items-start ">
             <div class="flex" v-for="(sub, i) in vm.change_form.subtasks" :key="i">
               <input 
-              v-model="vm.change_form.subtasks[i].title"
-              class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 my-1"
+              :value="vm.change_form.subtasks[i].title"
+              @change="e => change_form_input(e.target.value,i)"
+              class="appearance-none block w-full .bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 my-1"
               type="text"
               placeholder="Subtask"
               
             />
+            {{vm.change_form.subtasks[i].title}}
             <button @click="delSubTaskClick(i)" class="bg-white hover:bg-gray-100 block uppercase tracking-wide text-grey-darker text-xs font-bold my-1 font-semibold py-2 px-4 mx-1 border border-gray-400 rounded shadow">
               Del
             </button>
@@ -209,6 +211,19 @@ export default observer({
       if (this.vm.change_form.title == 0) this.titleTaskEmpty = true;
       else this.titleTaskEmpty = false;
     },
+
+    change_form_input(e, i){
+      console.log('e: ', e);
+      console.log('i: ', i);
+      console.log('f: ', this.vm.change_form.subtasks);
+      let arr = [];
+      for( let i = 0; i<this.vm.change_form.subtasks.lenght; i++) {
+          arr.push({title: this.vm.change_form.subtasks[i].title});
+      }
+      arr[i].title = e;
+      this.vm.change_form.subtasks = [{title: e}];
+       console.log('f: ', this.vm.change_form.subtask);
+    }
   },
 });
 

@@ -101,12 +101,12 @@ export default observer({
       this.vm.changeFlag(i);
     },
     changeSubFlag(id, j){
-      console.log('this.todos[id].subtasks[j].flag1: ', this.todo.subtasks[j].flag);
+      // console.log('this.todos[id].subtasks[j].flag1: ', this.todo.subtasks[j].flag);
       this.todo.subtasks[j].flag = !this.todo.subtasks[j].flag;
-      console.log('this.todos[id].subtasks[j].flag2: ', this.todo.subtasks[j].flag);
+      // console.log('this.todos[id].subtasks[j].flag2: ', this.todo.subtasks[j].flag);
       // this.vm.changeSubFlag(id, j);
-      console.log('id: ', id);
-      console.log('j: ', j);
+      // console.log('id: ', id);
+      // console.log('j: ', j);
     },
     showDescrWithoutHashtag(){
       let arrDescr = this.todo.description.split(' ');

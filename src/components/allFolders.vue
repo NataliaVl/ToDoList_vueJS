@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="uppercase text-grey-darker text-l font-bold">Папки</p>
+    <p class="uppercase text-grey-darker text-l font-bold">Folders</p>
 
     <section>
       <div class="flex justify-end px-64  w-full">

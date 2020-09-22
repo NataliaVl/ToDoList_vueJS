@@ -174,10 +174,12 @@ export default observer({
           this.title,
           this.description,
           this.date.formattedValue,
+          
           this.subtasks,
           this.priority,
           this.hashtag
         );
+        console.log('this.date.formattedValue,: ', this.date.formattedValue,);
         this.title = "";
         this.description = "";
         this.subtasks = [];

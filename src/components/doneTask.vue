@@ -1,7 +1,6 @@
 <template>
 <div>    
      <section>
-       <p class="uppercase  text-grey-darker text-l font-bold ">сделанные задачи</p>
     <div class="px-64 w-full items-center justify-center">
       <div class="w-full px-2 mt-2">
         <Task
@@ -14,7 +13,10 @@
       </div>
     </div>
     </section>
-    <updataTaskForm v-if="vm.change_form.flag" />
+
+    <section v-if="vm.change_form.isDone">
+      <updataTaskForm v-if="vm.change_form.flag" />
+    </section>
 </div>
 </template>
 
@@ -22,11 +24,13 @@
 import { observer } from "mobx-vue";
 import { store } from "@/store/index";
 import Task from './Task';
+import updataTaskForm from '@/components/updataTodo.vue'
 
 export default observer({
   name: "doneTask",
   components: {
-    Task
+    Task,
+    updataTaskForm
   },
   // props: ['onDataChange'], //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
   data() {
@@ -43,7 +47,6 @@ export default observer({
       this.vm.changeFlag(i);
     },    
     doneTask(){
-      // this.onDataChange(5);  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
       this.correctTodo =  Object.values(this.vm.todos).filter(value => (value.isDone));      
       return this.correctTodo;
     }
