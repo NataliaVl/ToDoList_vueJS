@@ -69,13 +69,11 @@
 import { observer } from "mobx-vue";
 import Vue from "vue";
 import { store } from "@/store/index";
-// import { delete } from "vue/types/umd";
 
 Vue.config.keyCodes.atsign = 50;
 export default observer({
   name: "updateFolderForm",
   components: {},
-  // props: ['sub'],
   data() {
     return {
       title: "",
@@ -106,10 +104,6 @@ export default observer({
 
     markCheckedProjects(idFolder, idProj){
       if(this.vm.folders[idFolder].idProject.includes(idProj)) {
-        console.log('this.vm.folders[idFolder].idProject.includes(idProj): ', this.vm.folders[idFolder].idProject.includes(idProj));
-        console.log('idProj: ', idProj);
-        console.log('this.vm.folders[idFolder].idProject: ', this.vm.folders[idFolder].idProject);
-
         return true;
         }
       else return false
@@ -120,7 +114,6 @@ export default observer({
       res = true;
       else
       res = false;
-      console.log('res: ', res);
       return res;
       
     }

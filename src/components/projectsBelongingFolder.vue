@@ -47,14 +47,12 @@ import { observer } from "mobx-vue";
 import { store } from "@/store/index";
 import Project from "@/components/Project.vue";
 import addProjectForm from "@/components/addProject.vue";
-// import updateFolderForm from '@/components/updateFolder.vue'
 
 export default observer({
   name: "projectsBelongingFolder",
   components: {
     Project,
     addProjectForm
-    // updateFolderForm
   },
   props: ["folder"],
   data() {
@@ -69,15 +67,12 @@ export default observer({
       this.correctTodo = Object.values(this.vm.projects).filter((value) =>
         this.folder.idProject.includes(value.id)
       );
-
       return this.correctTodo;
     },
+
     showAddProjectForm(){
       this.showAddProject = !this.showAddProject;
     }
   },
 });
 </script>
-
-<style>
-</style>

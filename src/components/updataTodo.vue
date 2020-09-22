@@ -161,7 +161,6 @@ export default observer({
 
     selectHashtag(){
       let arrDescr = this.vm.change_form.description.split(' ');
-      console.log('this.vm.change_form.description.split', this.vm.change_form.description.split(' '));
       this.vm.change_form.hashtag.length = 0;
       for (let index = 0; index < arrDescr.length; index++) {   
         if (arrDescr[index].startsWith("#")) {
@@ -213,16 +212,12 @@ export default observer({
     },
 
     change_form_input(e, i){
-      console.log('e: ', e);
-      console.log('i: ', i);
-      console.log('f: ', this.vm.change_form.subtasks);
       let arr = [];
       for( let i = 0; i<this.vm.change_form.subtasks.lenght; i++) {
           arr.push({title: this.vm.change_form.subtasks[i].title});
       }
       arr[i].title = e;
       this.vm.change_form.subtasks = [{title: e}];
-       console.log('f: ', this.vm.change_form.subtask);
     }
   },
 });

@@ -33,25 +33,19 @@
     </div>
   </section>
 
-    
-
 </div>
 
 
 </template>
 
 <script>
-// import { observer } from "mobx-vue";
 import { store } from "@/store/index";
 import Task from './Task';
-// import updataTaskForm from '@/components/updataTodo.vue'
-// import Vue from 'vue'
 
 export default {
   name: "searchTaskByHashtag", 
   components: {
     Task,
-    // updataTaskForm
   },
 
   props: ['todo'],
@@ -67,9 +61,6 @@ export default {
   methods: {
     searchHashtag(){
       this.flag = true;
-      // alert(this.hashtag);
-      // console.log(this.vm.todos[0].hashtag[0]);
-      // console.log('this.hashtag: ', this.hashtag);
     },
 
     iteratingValues(task){

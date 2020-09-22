@@ -56,7 +56,7 @@
             type="text"
             placeholder="Description"
           />
-          <!-- <p class="text-grey-dark text-xs italic">Make it as long and as crazy as you'd like</p> -->
+          
         </div>
       </div>
       <div class="flex">
@@ -121,9 +121,6 @@
       </div>
     </div>
 
-    <!-- <div v-if="vm.undones>0">Task not finished {{ vm.undones}}</div>
-    <div v-else-if="vm.todos.length>0">All tasks are done!</div>
-    <div v-else>No tasks!</div>-->
   </section>
 </template>
 
@@ -132,7 +129,6 @@ import { observer } from "mobx-vue";
 import Vue from "vue";
 import { store } from "@/store/index";
 import VueyeDatepicker from "vueye-datepicker";
-// import { delete } from "vue/types/umd";
 
 Vue.config.keyCodes.atsign = 50;
 export default observer({
@@ -140,7 +136,6 @@ export default observer({
   components: {
     VueyeDatepicker,
   },
-  // props: ['sub'],
   data() {
     return {
       title: "",
@@ -165,7 +160,6 @@ export default observer({
     onCreateBtnClick() {
       this.selectHashtag();
       this.addNewTodo();
-      // console.log(this.vm.todos)
     },
 
     addNewTodo() {
@@ -173,13 +167,11 @@ export default observer({
         this.vm.addTodo(
           this.title,
           this.description,
-          this.date.formattedValue,
-          
+          this.date.formattedValue,          
           this.subtasks,
           this.priority,
           this.hashtag
         );
-        console.log('this.date.formattedValue,: ', this.date.formattedValue,);
         this.title = "";
         this.description = "";
         this.subtasks = [];

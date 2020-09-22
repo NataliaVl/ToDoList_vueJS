@@ -52,10 +52,7 @@ export default observer({
   },
   computed: {
     correctToDo() {
-      console.log('gggggggggggggggggg: ');
       let arr = this.getCorrectTodo().sort((a, b) => { return b.priority.position - a.priority.position;});
-      
-      console.log('arr: ', arr);
       return arr;
     }
   },
@@ -71,21 +68,14 @@ export default observer({
       if (Object.keys(this.vm.todos).length === 0 || Object.keys(this.vm.todos).length === 1) return this.vm.todos;
 
       for (let task in this.vm.todos){
-        console.log('task.priority[1]: ', this.vm.todos[task].priority.position);
-
-        
-
-
         let max = this.vm.todos[task].priority.position; // максимальное значение (будем всегда ставить в начало)
         // let k = task;// индекс текущего максимума
         for (let prop in this.vm.todos) {
           if(prop )
           if(max < this.vm.todos[task + 1].priority.position){
-            max = this.vm.todos[task + 1].priority.position;
-            
+            max = this.vm.todos[task + 1].priority.position;            
         }
         }
-
       }
 
 
@@ -109,10 +99,7 @@ export default observer({
     },
    
     getCorrectTodo(){  
-      this.correctTodo =   Object.values(this.vm.todos).filter(value => !(value.isDone));
-      // console.log('this.vm.todos: ', this.vm.todos);   
-      // console.log(this.sortPrioprities([5, 4, 2, 0,8]) );
-      
+      this.correctTodo =   Object.values(this.vm.todos).filter(value => !(value.isDone));      
       return this.correctTodo;
     },
    

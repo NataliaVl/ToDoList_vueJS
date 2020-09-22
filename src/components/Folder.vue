@@ -127,6 +127,3 @@ export default observer({
   },
 });
 </script>
-
-<style>
-</style>

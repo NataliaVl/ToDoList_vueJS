@@ -46,21 +46,18 @@ export default class TodoList{
     }
 
     @action
-    changeTask(id){
-        console.log('this.todos[id]: ', this.todos[id].subtasks); //        
+    changeTask(id){       
         this.change_form = {            
             flag: true,
             id: id,
             title: this.todos[id].title,            
             description: this.todos[id].description,            
-            subtasks: this.todos[id].subtasks, // ПОДЗАДАЧИ НЕ ИЗМЕНЯЮТСЯ, ПОЧЕМУ????????????????????????????????????
+            subtasks: this.todos[id].subtasks, // ПОДЗАДАЧИ НЕ ИЗМЕНЯЮТСЯ
             date: this.todos[id].date,      
             isDone: this.todos[id].isDone,
             hashtag: this.todos[id].hashtag,
             priority: this.todos[id].priority
         };
-        console.log('this.todos[id].date,: ', this.todos[id].date,);
-        console.log('this.change_form1: ', this.change_form); //
     }
 
     @action
@@ -88,16 +85,11 @@ export default class TodoList{
 
     @action
     updateTodos(){
-        console.log('this.change_form: ', this.change_form);
-        console.log('this.: ', this.todos);
-
         this.todos[this.change_form.id].title = this.change_form.title;
         this.todos[this.change_form.id].description = this.change_form.description;
         this.todos[this.change_form.id].subtasks = this.change_form.subtasks; 
         this.todos[this.change_form.id].priority = this.change_form.priority;
         this.change_form = {flag : false}; //после обновления задачи, форма исчезает
-        console.log('this.change_form: ', this.change_form);
-        console.log('this.todos: ', this.todos);
     }
     @action
     removeTodo(id){
@@ -110,9 +102,7 @@ export default class TodoList{
 
     @action
     changeSubFlag(id, j){
-        console.log('this.todos[id].subtasks[j].flag: ', this.todos[id].subtasks[j].flag);
         this.todos[id].subtasks[j].flag = !this.todos[id].subtasks[j].flag;
-        console.log('this.todos[id].subtasks[j].flag: ', this.todos[id].subtasks[j].flag);
     }
     
     //FOLDER ACTION
@@ -212,7 +202,6 @@ export default class TodoList{
     //             }, 1000);
     //         };
     //         f();
-    //     console.log('isFetching: ', this.isFetching);
     // }
 }
 

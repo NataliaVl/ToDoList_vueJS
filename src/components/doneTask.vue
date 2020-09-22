@@ -32,7 +32,6 @@ export default observer({
     Task,
     updataTaskForm
   },
-  // props: ['onDataChange'], //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
   data() {
     return { 
       vm: store ,

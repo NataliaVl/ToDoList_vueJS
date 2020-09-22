@@ -14,10 +14,7 @@
       </div>
     </div>
     </section>
-    <section>
-      <!-- <updateFolderForm v-if="vm.change_folder_form.flag" /> -->
-    </section>
-   
+       
 </div>
 </template>
 
@@ -25,13 +22,11 @@
 import { observer } from "mobx-vue";
 import { store } from "@/store/index";
 import Project from '@/components/Project.vue'
-// import updateFolderForm from '@/components/updateFolder.vue'
 
 export default observer({
   name: "allProject",
   components: {
     Project,
-    // updateFolderForm
   },
 
   data() {
@@ -43,7 +38,3 @@ export default observer({
   },
 });
 </script>
-
-<style>
-
-</style>

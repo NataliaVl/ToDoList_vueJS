@@ -78,9 +78,6 @@ import { observer } from "mobx-vue";
 import Vue from "vue";
 import { store } from "@/store/index";
 
-
-// import { delete } from "vue/types/umd";
-
 Vue.config.keyCodes.atsign = 50;
 export default observer({
   name: "task", 
@@ -101,12 +98,7 @@ export default observer({
       this.vm.changeFlag(i);
     },
     changeSubFlag(id, j){
-      // console.log('this.todos[id].subtasks[j].flag1: ', this.todo.subtasks[j].flag);
       this.todo.subtasks[j].flag = !this.todo.subtasks[j].flag;
-      // console.log('this.todos[id].subtasks[j].flag2: ', this.todo.subtasks[j].flag);
-      // this.vm.changeSubFlag(id, j);
-      // console.log('id: ', id);
-      // console.log('j: ', j);
     },
     showDescrWithoutHashtag(){
       let arrDescr = this.todo.description.split(' ');

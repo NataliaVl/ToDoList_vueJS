@@ -31,7 +31,6 @@
 
     <section>
       <div class="px-64 w-full items-center justify-center">
-        <!-- <div v-on:click="onClickFolder" class="w-full px-2 mt-2"> -->
         <div class="w-full px-2 mt-2">
           <Folder v-for="folder in vm.folders" :key="folder.id" :folder="folder"></Folder>
         </div>

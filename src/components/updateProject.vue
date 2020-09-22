@@ -37,24 +37,7 @@
           </div>
         </div>
       </div>
-
-      <!-- <div
-        v-for="project in this.vm.projects"
-        :key="project.id"
-        class="md:w-1/3 block text-gray-600 font-bold"
-      >
-        <input
-          v-model="idProject"
-          :value="{id: project.id}"
-          class="mr-2 leading-tight"
-          type="checkbox"
-          :checked="vm.change_folder_form.idProject.includes(project.id)"
-          
-        />
-        :checked="vm.folders[vm.change_folder_form.id].idProject.includes(project.id)"
-        <span class="text-sm">{{project.title}}</span>
-      </div> -->
-
+      
       <div class="flex justify-center md:w-full px-3">
         <button
           @click="onUpdateBtnClick()"
@@ -69,13 +52,11 @@
 import { observer } from "mobx-vue";
 import Vue from "vue";
 import { store } from "@/store/index";
-// import { delete } from "vue/types/umd";
 
 Vue.config.keyCodes.atsign = 50;
 export default observer({
   name: "updateProjectForm",
   components: {},
-  // props: ['sub'],
   data() {
     return {
       title: "",
@@ -95,17 +76,6 @@ export default observer({
       if (this.vm.change_folder_form.title == 0) this.titleProjectEmpty = true;
       else this.titleProjectEmpty = false;
     },
-
-    // markCheckedProjects(idFolder, idProj){
-    //   if(this.vm.folders[idFolder].idProject.includes(idProj)) {
-    //     console.log('this.vm.folders[idFolder].idProject.includes(idProj): ', this.vm.folders[idFolder].idProject.includes(idProj));
-    //     console.log('idProj: ', idProj);
-    //     console.log('this.vm.folders[idFolder].idProject: ', this.vm.folders[idFolder].idProject);
-
-    //     return true;
-    //     }
-    //   else return false
-    // }
   },
 });
 </script>

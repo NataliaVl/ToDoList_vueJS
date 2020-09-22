@@ -74,14 +74,12 @@
 import { observer } from "mobx-vue";
 import Vue from "vue";
 import { store } from "@/store/index";
-// import { delete } from "vue/types/umd";
 
 Vue.config.keyCodes.atsign = 50;
 export default observer({
   name: "addNewFolderForm",
   components: {
   },
-  // props: ['sub'],
   data() {
     return {
       title: "",
@@ -140,14 +138,7 @@ export default observer({
     },
 
     getCorrectProjects(){
-      
-      //!!!!!!!!!!!!!!!!!!!!!!
-      // this.correctTodo = Object.values(this.vm.projects).filter(this.filterProjects); // ФИЛЬТРУЕТ ПРОЕКТЫ: ЕСЛИ ПРОЕКТ УЖЕ ОТНОСИТСЯ К ПАПКЕ, ТО ОН НЕ ВЫВОДИТСЯ
-      //!!!!!!!!!!!!!!!!!!!!!1
-      // return this.correctTodo;
-
-      return this.vm.projects;
-      
+      return this.vm.projects;      
     }
   },
 });
