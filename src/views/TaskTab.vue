@@ -1,12 +1,6 @@
 <template>
   <div>
     <div class="taskTab">
-      
-    
-    <!-- <div v-else>
-    обработка запроса
-    </div>-->
-
     <ul class="flex border-b px-64">
       <li
         v-for="tab in tabs"
@@ -15,7 +9,6 @@
         v-on:click="currentTab = tab"
         class="  mr-1"
       >
-        <!-- <router-link to="/add_task"> Add Task </router-link> -->
         <a
           href="#"
           
@@ -24,16 +17,6 @@
       </li>
     </ul>
     <component v-bind:is="currentTab.component" class="tab"></component>
-    <!-- <button
-        v-for="tab in tabs"
-        v-bind:key="tab.name"
-        v-bind:class="['tab-button', { active: currentTab.name === tab.name }]"
-        v-on:click="currentTab = tab"
-      >
-        {{ tab.name }}
-      </button>
-
-    <component v-bind:is="currentTab.component" class="tab"></component>-->
     </div>
   </div>
 </template>
@@ -46,7 +29,6 @@ import addNewTaskForm from "@/components/addTodo.vue";
 import searchTaskByHashtag from "@/components/SearchTaskByHashtag.vue";
 
 import updataTaskForm from "@/components/updataTodo.vue";
-// import allProject from '@/components/allProject.vue'
 
 let tabs = [
   {
@@ -71,13 +53,11 @@ export default {
   name: "taskTab",
 
   components: {
-    // todoList,
     doneTask,
     undoneTask,
     addNewTaskForm,
     searchTaskByHashtag,
     updataTaskForm,
-    // allProject
   },
   data() {
     return {
@@ -85,11 +65,6 @@ export default {
       tabs: tabs,
       currentTab: tabs[0],
     };
-  },
-  method: {
-    // onDataChange(newId) { !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //     this.myData.id = newId;
-    // }
   },
 };
 </script>
@@ -124,7 +99,6 @@ export default {
         background: #ffffff;
 
         margin-bottom: -1px;
-        /* margin-right: -1px; */
       }
       
     </style>

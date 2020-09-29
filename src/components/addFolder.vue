@@ -6,7 +6,7 @@
           <label
             class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
             for="title"
-          >Название</label>
+          >Name</label>
           <input
             v-model="title"
             placeholder="Folder"
@@ -25,7 +25,7 @@
             <label
               class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
               for="description"
-            >Описание</label>
+            >Description</label>
             <input
               v-model="description"
               class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3"

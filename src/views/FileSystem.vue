@@ -7,7 +7,6 @@
 <script>
 import { store } from "@/store/index";
 import allFolders from '@/components/allFolders.vue'
-// import allProject from '@/components/allProject.vue'
 
 export default {
   name: 'FileSystem',
@@ -19,10 +18,5 @@ export default {
       vm: store, 
     }
   },
-  method: {
-    // onDataChange(newId) { !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //     this.myData.id = newId;
-    // }
-  }
 }
 </script>

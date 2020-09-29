@@ -8,7 +8,7 @@
           <label
             class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
             for="title"
-          >Название</label>
+          >Name</label>
           <input
             v-model="title"
             placeholder="Task"
@@ -26,7 +26,7 @@
           <label
             class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
             for="completion-date"
-          >Дата выполнения задачи</label>
+          >Date</label>
           <div class="flex justify-between">
             <vueye-datepicker
               v-if="visibleDate"
@@ -48,7 +48,7 @@
           <label
             class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
             for="description"
-          >Описание</label>
+          >Description</label>
           <input
             v-model="description"
             class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3"
@@ -63,7 +63,7 @@
         <div class=" md:w-2/3 mb-6 md:mb-0">
         <label
           class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-        >Подзадачи</label>
+        >Subtasks</label>
         <div class="flex flex-col items-start">
           <div class="flex" v-for="(sub, i) in subtasks" :key="i">
             <input
@@ -88,7 +88,7 @@
       <div class=" md:w-1/3 mb-6 md:mb-0 justify-center">     
         <label
           class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-        >Приоритет задачи</label>   
+        >Priority</label>   
         <div class="flex md:w-full content-end">
           <button
           @click="selectPriority(0)"

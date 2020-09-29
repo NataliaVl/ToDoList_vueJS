@@ -22,7 +22,7 @@
                 </div>
                 <div class="flex">
                   <div class="flex flex-col mx-5 ">
-                    <span class="text-gray-700 font-light uppercase">Дата выполнения задачи</span>
+                    <span class="text-gray-700 font-light uppercase">Date</span>
                     <span class="text-gray-700 font-light uppercase">{{todo.date}}</span>
                   </div>
                   <button
@@ -37,7 +37,7 @@
                     <label v-if="todo.subtasks.length !== 0"
                       class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
                       for="title"
-                    >Подзадачи</label>
+                    >Subtasks</label>
                   </div>
                   <div v-for="(sub,j) in todo.subtasks" :key="j" class="flex justify-start">
                     <div >
@@ -56,19 +56,16 @@
                 </div>
               </div>
               
-              <section class="flex justify-start">
+              <section class="flex justify-start pt-3">
                 <div v-for="(hash, i) in todo.hashtag" :key="i" class="flex inline-flex">
                     <span class="rounded-full bg-gray-400 px-2 py-1 text-xs font-bold mr-3">
                       {{hash}}
                     </span>
                   
                 </div>
-          </section>
-              
-            </div>
-            
-          </div>
-          
+          </section>              
+            </div>            
+          </div>          
           
         </div>
 </template>
@@ -81,9 +78,6 @@ import { store } from "@/store/index";
 Vue.config.keyCodes.atsign = 50;
 export default observer({
   name: "task", 
-  components: { 
-    
-    },
   props: ['todo'],
   data() {
     return {
@@ -103,9 +97,7 @@ export default observer({
     showDescrWithoutHashtag(){
       let arrDescr = this.todo.description.split(' ');
       let arrDescriptionWithoutHashtag = arrDescr.filter(descr => !descr.startsWith("#"));
-
-      return arrDescriptionWithoutHashtag.join(" ");
-      
+      return arrDescriptionWithoutHashtag.join(" ");      
     }
   },
   
